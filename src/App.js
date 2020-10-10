@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-
+import { Grid } from '@material-ui/core';
+import Navbar from './components/Navbar'
+import { getUpcommingMatches } from './api/Api';
+import MatchCard from './components/MatchCard';
 function App() {
+
+  const [matches, setMatches] = useState([]); //initail value is empty array
+
+  useEffect(() => {
+    getUpcommingMatches()
+      .then((data) => {
+        setMatches(data.matches);
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <Grid container>
+        <Grid item sm={2}></Grid>
+        <Grid item sm={8}>
+          <Typography variant="h3" style={{ fontWeight: 900 }} color="secondary" >Live T20</Typography>
+          {
+            matches.map((match) => (
+              <MatchCard match={match} key={match.unique_id} />
+            ))
+          }
+          <Grid item xs={2}></Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 }
