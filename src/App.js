@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import Navbar from './components/Navbar'
 import { getUpcommingMatches } from './api/Api';
 import MatchCard from './components/MatchCard';
@@ -24,7 +24,7 @@ function App() {
       <Grid container>
         <Grid item sm={2}></Grid>
         <Grid item sm={8}>
-          <Typography variant="h3" style={{ fontWeight: 900 }} color="secondary" >Live T20</Typography>
+          <Typography  variant="h3" style={{ fontWeight: 900 }} color="secondary" >Live T20</Typography>
           {
             matches.map((match) => (
               <MatchCard match={match} key={match.unique_id} />
